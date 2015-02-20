@@ -1,32 +1,37 @@
-Using this AJAX/PHP/MySQL tutorial: http://www.w3schools.com/php/php_ajax_database.asp
+Installing bikeMg
 
-What exactly do we need?
-	A web page to fetch & sum up bike part weights from a MySQL db via AJAX.
+Download & Install Vagrant (https://www.vagrantup.com/downloads.html)
+Download & Install VirtualBox (https://www.virtualbox.org/wiki/Downloads)
+Download & Install Sequel Pro (http://www.sequelpro.com/download)
 
-Essential Parts
-	MySQL database of bike part data
-	HTML page to display drop down for each part and total weight
-	JavaScript functions to call the PHP script and handle returned data
-	PHP script to query db and return part data to JavaScript function
+Configure Sequel Pro:
+	Click '+' in bottom left to add a New Favorite Connection
+		SSH
+		Name: scotch
+		MySQL Host: 127.0.0.1
+		Username: root
+		Password: root
+		SSH Host: 192.168.33.10
+		SSH User: vagrant
+		SSH Password: vagrant
+	Connect
+	Choose Database... > Add Database... > Name: bikeMg
 
-Example of Functionality
-	-1. drop downs are populated with part names from db
-	0. user selects part from drop down
-	1. JS function fired on select which asks the PHP script (request to controller)
-	2. JS asks PHP script to lookup part weight in db (controller request to model)
-	3. PHP script returns part weight from db to JS (model return response to controller)
-	4. JS injects part weight into HTML page (controller returns response to view)
-	5. HTML page is displayed with part weights (view renders response to initial request)
+	Copypasta these queries in:
+		CREATE TABLE Frames (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,brand VARCHAR(30) NOT NULL,name VARCHAR(30) NOT NULL,year YEAR NOT NULL,weight INT(5) NOT NULL);
+		CREATE TABLE Forks LIKE bikeMg.Frames;CREATE TABLE Wheelsets LIKE bikeMg.Frames;CREATE TABLE Brakesets LIKE bikeMg.Frames;CREATE TABLE Seatposts LIKE bikeMg.Frames;
+		INSERT INTO bikeMg.Frames (brand, name, year, weight) VALUES ('Transition','Covert Carbon 26','2013','3150');
+		INSERT INTO bikeMg.Forks (brand, name, year, weight) VALUES ('Rock Shox','Pike RCT3 26','2014','1835');
+		INSERT INTO bikeMg.Wheelsets (brand, name, year, weight) VALUES ('Stans','ZTR Flow EX 26','2014','1780');
+		INSERT INTO bikeMg.Brakesets (brand, name, year, weight) VALUES ('Shimano','XT','2014','900');
+		INSERT INTO bikeMg.Seatposts (brand, name, year, weight) VALUES ('KS','Lev','2014','450');
+	Select All > Run Selection
 
-https://scotch.io/bar-talk/introducing-scotch-box-a-vagrant-lamp-stack-that-just-works
+Terminal commands (inside your project folder):
+	mkdir scotch.io/
+	cd scotch.io/
+	git clone https://github.com/scotch-io/scotch-box.git bikeMg
+	cd bikeMg
+	vagrant up
 
-location of app: 192.168.33.10
-
-Classical LAMP Server Model
-	1. server side - PHP scripts to provide an HTTP interface to MySQL database
-	2. client side - HTML/CSS with JS functions calling HTTP interface that echos MySQL data
-
-Model - PHP scripts that expose ways to access & echo data from MySQL
-View - HTML to create basic structure, CSS to shape & style the structure
-Controller - JS to retrieve data and insert into HTML via AJAX
-
+Location of App: 192.168.33.10
