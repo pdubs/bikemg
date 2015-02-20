@@ -12,6 +12,7 @@ cd scotch.io/
 git clone https://github.com/scotch-io/scotch-box.git bikeMg
 cd bikeMg
 vagrant up
+git clone git@github.com:pdubs/bikemg.git public
 ```
 
 #####Configure Sequel Pro:
