@@ -1,0 +1,133 @@
+CREATE TABLE IF NOT EXISTS Users (
+	user_id INT NOT NULL AUTO_INCREMENT,
+	user_name VARCHAR(64) NOT NULL,
+	user_password_hash VARCHAR(255) NOT NULL,
+	user_email VARCHAR(64) NOT NULL,
+	PRIMARY KEY (user_id),
+	UNIQUE (user_name),
+	UNIQUE (user_email)
+);
+
+CREATE TABLE IF NOT EXISTS Frames (
+	part_id INT AUTO_INCREMENT,
+	brand VARCHAR(64) NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	year YEAR NOT NULL,
+	weight INT(5) NOT NULL,
+	price DECIMAL(6,2),
+	image VARCHAR(256),
+	PRIMARY KEY (part_id)
+);
+
+CREATE TABLE IF NOT EXISTS Forks (
+	part_id INT AUTO_INCREMENT,
+	brand VARCHAR(64) NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	year YEAR NOT NULL,
+	weight INT(5) NOT NULL,
+	price DECIMAL(6,2),
+	image VARCHAR(256),
+	PRIMARY KEY (part_id)
+);
+
+CREATE TABLE IF NOT EXISTS Wheelsets (
+	part_id INT AUTO_INCREMENT,
+	brand VARCHAR(64) NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	year YEAR NOT NULL,
+	weight INT(5) NOT NULL,
+	price DECIMAL(6,2),
+	image VARCHAR(256),
+	PRIMARY KEY (part_id)
+);
+
+CREATE TABLE IF NOT EXISTS Brakesets (
+	part_id INT AUTO_INCREMENT,
+	brand VARCHAR(64) NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	year YEAR NOT NULL,
+	weight INT(5) NOT NULL,
+	price DECIMAL(6,2),
+	image VARCHAR(256),
+	PRIMARY KEY (part_id)
+);
+
+CREATE TABLE IF NOT EXISTS Seatposts (
+	part_id INT AUTO_INCREMENT,
+	brand VARCHAR(64) NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	year YEAR NOT NULL,
+	weight INT(5) NOT NULL,
+	price DECIMAL(6,2),
+	image VARCHAR(256),
+	PRIMARY KEY (part_id)
+);
+
+CREATE TABLE IF NOT EXISTS Bikes (
+	bike_id INT AUTO_INCREMENT,
+	user INT,
+	frame INT,
+	fork INT,
+	wheelset INT,
+	brakeset INT,
+	seatpost INT,
+	name VARCHAR(64),
+	image VARCHAR(256),
+	PRIMARY KEY (bike_id),
+	FOREIGN KEY (user) REFERENCES Users(user_id),
+	FOREIGN KEY (frame) REFERENCES Frames(part_id),
+	FOREIGN KEY (fork) REFERENCES Forks(part_id),
+	FOREIGN KEY (wheelset) REFERENCES Wheelsets(part_id),
+	FOREIGN KEY (brakeset) REFERENCES Brakesets(part_id),
+	FOREIGN KEY (seatpost) REFERENCES Seatposts(part_id)
+);
+
+CREATE VIEW Bikes_View AS
+SELECT
+	bike.*,
+	(fr.weight + fo.weight + wh.weight + br.weight + se.weight) as total_weight,
+	(fr.price + fo.price + wh.price + br.price + se.price) as total_price
+FROM
+	Bikes bike
+	JOIN Frames fr ON bike.frame = fr.part_id
+	JOIN Forks fo ON bike.fork = fo.part_id
+	JOIN Wheelsets wh ON bike.wheelset = wh.part_id
+	JOIN Brakesets br ON bike.brakeset = br.part_id
+	JOIN Seatposts se ON bike.seatpost = se.part_id;
+	
+INSERT INTO Frames VALUES (DEFAULT,'Transition','Covert Carbon 26','2013','3150','2999.00','http://www.pricepoint.com/_productimages/default/140x140/175_tracc4_thumb.jpg');
+INSERT INTO Frames VALUES (DEFAULT,'Dean','Titanium Fatty','2014','1860','2050.00','https://www.bti-usa.com/images/thumbnails/medium/dn/dn0551.jpg');
+INSERT INTO Frames VALUES (DEFAULT,'NS','Surge-Evo','2014','2720','550.00','https://www.bti-usa.com/images/thumbnails/medium/ns/ns1510.jpg');
+INSERT INTO Frames VALUES (DEFAULT,'Black Market','Killswitch','2014','3630','1295.00','https://www.bti-usa.com/images/thumbnails/medium/bl/bl1100.jpg');
+INSERT INTO Frames VALUES (DEFAULT,'Soma','Juice 29er','2014','2355','490.00','https://www.bti-usa.com/images/thumbnails/medium/sf/sf4840.jpg');
+
+INSERT INTO Forks VALUES (DEFAULT,'Rock Shox','Pike RCT3 26','2014','1835','790.00','https://www.bti-usa.com/images/thumbnails/medium/rs/rs9040.jpg');
+INSERT INTO Forks VALUES (DEFAULT,'DT-Swiss','XMM','2014','1745','479.00','https://www.bti-usa.com/images/thumbnails/medium/dt/dt2469.jpg');
+INSERT INTO Forks VALUES (DEFAULT,'Magura','TS8 R','2014','1675','570.00','https://www.bti-usa.com/images/thumbnails/medium/mu/mu1362.jpg');
+INSERT INTO Forks VALUES (DEFAULT,'Manitou','Marvel Expert','2013','1550','399.00','https://www.bti-usa.com/images/thumbnails/medium/ap/ap9020.jpg');
+INSERT INTO Forks VALUES (DEFAULT,'X-Fusion','Slant RL2 Air','2014','1840','649.00','https://www.bti-usa.com/images/thumbnails/medium/xf/xf9602.jpg');
+
+INSERT INTO Wheelsets VALUES (DEFAULT,'Stans','ZTR Flow EX 26','2014','1780','595.00','https://www.bti-usa.com/images/thumbnails/medium/sx/sx9049.jpg');
+INSERT INTO Wheelsets VALUES (DEFAULT,'American Classic','Carbonator','2014','1595','1799.00','https://www.bti-usa.com/images/thumbnails/medium/as/as5195.jpg');
+INSERT INTO Wheelsets VALUES (DEFAULT,'Azonic','Outlaw','2014','2160','319.00','https://www.bti-usa.com/images/thumbnails/medium/ay/ay3208.jpg');
+INSERT INTO Wheelsets VALUES (DEFAULT,'E*thirteen','LG1+','2014','2050','694.00','https://www.bti-usa.com/images/thumbnails/medium/ev/ev6324.jpg');
+INSERT INTO Wheelsets VALUES (DEFAULT,'Fulcrum','Red Metal Zero XRP','2014','1470','1340.00','https://www.bti-usa.com/images/thumbnails/medium/um/um3024.jpg');
+
+INSERT INTO Brakesets VALUES (DEFAULT,'Shimano','XT','2014','900','295.00','http://www.backcountry.com/images/items/medium/SHI/SHI000G/ONECOL.jpg');
+INSERT INTO Brakesets VALUES (DEFAULT,'SRAM','X0','2014','890','310.00','https://www.bti-usa.com/images/thumbnails/medium/gs/gs3980.jpg');
+INSERT INTO Brakesets VALUES (DEFAULT,'Avid','Elixer 5','2014','1010','530.00','https://www.bti-usa.com/images/thumbnails/medium/av/av4490.jpg');
+INSERT INTO Brakesets VALUES (DEFAULT,'Hayes','Stroker Ace','2014','920','490.00','https://www.bti-usa.com/images/thumbnails/medium/hy/hy5001.jpg');
+INSERT INTO Brakesets VALUES (DEFAULT,'Magura','MT-4','2014','990','599.00','https://www.bti-usa.com/images/thumbnails/medium/mu/mu6156.jpg');
+
+INSERT INTO Seatposts VALUES (DEFAULT,'KS','Lev','2014','450','339.00','https://www.bti-usa.com/images/thumbnails/medium/kd/kd2966.jpg');
+INSERT INTO Seatposts VALUES (DEFAULT,'GravityDropper','Descender','2014','468','225.00','https://www.bti-usa.com/images/thumbnails/medium/gv/gv8964.jpg');
+INSERT INTO Seatposts VALUES (DEFAULT,'Rock Shox','Reverb Stealth','2014','570','306.00','https://www.bti-usa.com/images/thumbnails/medium/rs/rs6950.jpg');
+INSERT INTO Seatposts VALUES (DEFAULT,'KS','E-Ten','2014','680','139.00','https://www.bti-usa.com/images/thumbnails/medium/kd/kd3401.jpg');
+INSERT INTO Seatposts VALUES (DEFAULT,'X-Fusion','Hilo','2014','565','249.00','https://www.bti-usa.com/images/thumbnails/medium/xf/xf7007.jpg');
+
+INSERT INTO Bikes VALUES (DEFAULT,1,1,1,1,1,1,'Mellow Yellow','https://www.transitionbikes.com/Gallery/Gallery_JohnTaitCovert.jpg');
+INSERT INTO Bikes VALUES (DEFAULT,1,4,2,4,2,1,'#2 Bike','http://i579.photobucket.com/albums/ss237/Danbury_MTB/SLOPESTYLE%20Bikes/BlackMarket-Killswitch.jpg');
+INSERT INTO Bikes VALUES (DEFAULT,2,3,2,5,1,2,'Green Machine','http://ep1.pinkbike.org/p4pb10913043/p4pb10913043.jpg');
+INSERT INTO Bikes VALUES (DEFAULT,2,3,5,5,3,3,'Secondary Bike','http://p.vitalmtb.com/photos/users/23432/setup_checks/21154/photos/17925/s780_Surge_New.jpg');
+INSERT INTO Bikes VALUES (DEFAULT,3,2,1,1,4,5,'The Beast','http://fat-bike.com/wp-content/uploads/2014/03/fatbikes-2014-NAHBS-280.jpg');
+INSERT INTO Bikes VALUES (DEFAULT,3,5,3,3,5,4,'Back-up Bike','https://c2.staticflickr.com/6/5245/5378419524_f4e8b3a43e_z.jpg');
