@@ -125,6 +125,8 @@ INSERT INTO Seatposts VALUES (DEFAULT,'Rock Shox','Reverb Stealth','2014','570',
 INSERT INTO Seatposts VALUES (DEFAULT,'KS','E-Ten','2014','680','139.00','https://www.bti-usa.com/images/thumbnails/medium/kd/kd3401.jpg');
 INSERT INTO Seatposts VALUES (DEFAULT,'X-Fusion','Hilo','2014','565','249.00','https://www.bti-usa.com/images/thumbnails/medium/xf/xf7007.jpg');
 
+/* NOTE: These INSERTS are only valid assuming you already have at least 3 Users created */
+
 INSERT INTO Bikes VALUES (DEFAULT,1,1,1,1,1,1,'Mellow Yellow','https://www.transitionbikes.com/Gallery/Gallery_JohnTaitCovert.jpg');
 INSERT INTO Bikes VALUES (DEFAULT,1,4,2,4,2,1,'#2 Bike','http://i579.photobucket.com/albums/ss237/Danbury_MTB/SLOPESTYLE%20Bikes/BlackMarket-Killswitch.jpg');
 INSERT INTO Bikes VALUES (DEFAULT,2,3,2,5,1,2,'Green Machine','http://ep1.pinkbike.org/p4pb10913043/p4pb10913043.jpg');
