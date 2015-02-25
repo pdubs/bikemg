@@ -54,7 +54,7 @@ function userBikes() {
 
 // Build a user display: Username + Bikes
 function buildUser($user) {
-	$sql = "SELECT * FROM Bikes_View b WHERE " . $user->user_id . " = b.user ORDER BY b.bike_id ASC";
+	$sql = "SELECT * FROM Bikes_View b WHERE " . $user->user_id . " = b.user_id ORDER BY b.bike_id ASC";
 	$res_2 = $GLOBALS["conn"]->query($sql);
 	
 	echo ($_SESSION["user_name"] == "admin") ? "<div class='user'>" . $user->user_name . " (" . $res_2->num_rows . ")</div>" : "";
@@ -111,18 +111,18 @@ function highlight($param, $var) {
 /////////////////////////////////////////////////////////////////////////////////////
 
 function allowedToEditBike($id) {
-	$sql = ($_SESSION["user_name"] == "admin") ?  "SELECT * FROM Bikes_View WHERE bike_id = " . $id : "SELECT * FROM Bikes_View WHERE user = " . $_SESSION["user_id"] . " AND bike_id = " . $id;
+	$sql = ($_SESSION["user_name"] == "admin") ?  "SELECT * FROM Bikes_View WHERE bike_id = " . $id : "SELECT * FROM Bikes_View WHERE user_id = " . $_SESSION["user_id"] . " AND bike_id = " . $id;
 	$res = $GLOBALS["conn"]->query($sql);
 
 	return ($res && $res->num_rows === 1);
 }
 
 function bikeBuild($id) {
-	$sql = ($_SESSION["user_name"] == "admin") ?  "SELECT * FROM Bikes_View WHERE bike_id = " . $id : "SELECT * FROM Bikes_View WHERE user = " . $_SESSION["user_id"] . " AND bike_id = " . $id;
+	$sql = ($_SESSION["user_name"] == "admin") ?  "SELECT * FROM Bikes_View WHERE bike_id = " . $id : "SELECT * FROM Bikes_View WHERE user_id = " . $_SESSION["user_id"] . " AND bike_id = " . $id;
 	$res = $GLOBALS["conn"]->query($sql);
 	
 	if ($res && $res->num_rows == 1) {
-		$bike = $res->fetch_object();
+		$bike = $res->fetch_assoc();
 		bikeDetails($bike);
 	} else {
 		echo "<div class='prompt'>Select Your Bike</div>";
@@ -130,13 +130,9 @@ function bikeBuild($id) {
 }
 
 function bikeDetails($bike) {
-	echo 
-		buildRow($GLOBALS["parts"]->frame, $bike->frame)
-		. buildRow($GLOBALS["parts"]->fork, $bike->fork)
-		. buildRow($GLOBALS["parts"]->wheelset, $bike->wheelset)
-		. buildRow($GLOBALS["parts"]->brakeset, $bike->brakeset)
-		. buildRow($GLOBALS["parts"]->seatpost, $bike->seatpost)
-	;
+	foreach($GLOBALS["parts"] as $key => $value) {
+		echo buildRow($value, $bike[$value->field]);
+	}
 }
 
 // Display of a user bike part detail

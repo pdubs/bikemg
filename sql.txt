@@ -65,21 +65,21 @@ CREATE TABLE IF NOT EXISTS Seatposts (
 
 CREATE TABLE IF NOT EXISTS Bikes (
 	bike_id INT AUTO_INCREMENT,
-	user INT,
-	frame INT,
-	fork INT,
-	wheelset INT,
-	brakeset INT,
-	seatpost INT,
+	user_id INT,
+	frame_id INT,
+	fork_id INT,
+	wheelset_id INT,
+	brakeset_id INT,
+	seatpost_id INT,
 	name VARCHAR(64),
 	image VARCHAR(256),
 	PRIMARY KEY (bike_id),
-	FOREIGN KEY (user) REFERENCES Users(user_id),
-	FOREIGN KEY (frame) REFERENCES Frames(part_id),
-	FOREIGN KEY (fork) REFERENCES Forks(part_id),
-	FOREIGN KEY (wheelset) REFERENCES Wheelsets(part_id),
-	FOREIGN KEY (brakeset) REFERENCES Brakesets(part_id),
-	FOREIGN KEY (seatpost) REFERENCES Seatposts(part_id)
+	FOREIGN KEY (user_id) REFERENCES Users(user_id),
+	FOREIGN KEY (frame_id) REFERENCES Frames(part_id),
+	FOREIGN KEY (fork_id) REFERENCES Forks(part_id),
+	FOREIGN KEY (wheelset_id) REFERENCES Wheelsets(part_id),
+	FOREIGN KEY (brakeset_id) REFERENCES Brakesets(part_id),
+	FOREIGN KEY (seatpost_id) REFERENCES Seatposts(part_id)
 );
 
 CREATE VIEW Bikes_View AS
@@ -89,11 +89,11 @@ SELECT
 	(fr.price + fo.price + wh.price + br.price + se.price) as total_price
 FROM
 	Bikes bike
-	JOIN Frames fr ON bike.frame = fr.part_id
-	JOIN Forks fo ON bike.fork = fo.part_id
-	JOIN Wheelsets wh ON bike.wheelset = wh.part_id
-	JOIN Brakesets br ON bike.brakeset = br.part_id
-	JOIN Seatposts se ON bike.seatpost = se.part_id;
+	JOIN Frames fr ON bike.frame_id = fr.part_id
+	JOIN Forks fo ON bike.fork_id = fo.part_id
+	JOIN Wheelsets wh ON bike.wheelset_id = wh.part_id
+	JOIN Brakesets br ON bike.brakeset_id = br.part_id
+	JOIN Seatposts se ON bike.seatpost_id = se.part_id;
 	
 INSERT INTO Frames VALUES (DEFAULT,'Transition','Covert Carbon 26','2013','3150','2999.00','http://www.pricepoint.com/_productimages/default/140x140/175_tracc4_thumb.jpg');
 INSERT INTO Frames VALUES (DEFAULT,'Dean','Titanium Fatty','2014','1860','2050.00','https://www.bti-usa.com/images/thumbnails/medium/dn/dn0551.jpg');
