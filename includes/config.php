@@ -9,11 +9,11 @@ define("APP_NAME", "bikeMg");
 
 $parts = (object) 
 [
-	"frame" => (object) ['table' => 'Frames', 'field' => 'frame', 'title' => 'Frame'],
-	"fork" => (object) ['table' => 'Forks', 'field' => 'fork', 'title' => 'Fork'],
-	"wheelset" => (object) ['table' => 'Wheelsets', 'field' => 'wheelset', 'title' => 'Wheelset'],
-	"brakeset" => (object) ['table' => 'Brakesets', 'field' => 'brakeset', 'title' => 'Brakeset'],
-	"seatpost" => (object) ['table' => 'Seatposts', 'field' => 'seatpost', 'title' => 'Seatpost']
+	(object) ['table' => 'Frames', 'field' => 'frame_id', 'title' => 'Frame'],
+	(object) ['table' => 'Forks', 'field' => 'fork_id', 'title' => 'Fork'],
+	(object) ['table' => 'Wheelsets', 'field' => 'wheelset_id', 'title' => 'Wheelset'],
+	(object) ['table' => 'Brakesets', 'field' => 'brakeset_id', 'title' => 'Brakeset'],
+	(object) ['table' => 'Seatposts', 'field' => 'seatpost_id', 'title' => 'Seatpost']
 ];
 
 ?>
